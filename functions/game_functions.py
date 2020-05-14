@@ -16,7 +16,7 @@ def check_button_events(mouse_pos, buttons):
                     return True
 
 
-def check_register_events(mouse_pos, buttons, input_box):
+def check_login_events(mouse_pos, buttons, input_box):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()

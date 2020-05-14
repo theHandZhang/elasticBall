@@ -18,6 +18,8 @@ def run_game():
     screen.fill(settings.screen_color)
     pygame.display.flip()
 
+    account = None
+
     balls = Group()
     bricks = Group()
 
@@ -41,8 +43,8 @@ def run_game():
     author_page = Page(settings, screen, back_buttons, None)
     settings_page = Page(settings, screen, settings_buttons, None)
     exit_page = ExitPage(settings, screen, None, None)
-    game_page = GamePage(settings, screen, game_page_back_buttons, None, balls, player_brick, bricks, vector)
-    login_page = LoginPage(settings, screen, login_page_buttons, login_page_text, input_box)
+    game_page = GamePage(settings, screen, game_page_back_buttons, None, balls, player_brick, bricks, vector, account)
+    login_page = LoginPage(settings, screen, login_page_buttons, login_page_text, input_box, account)
 
     all_buttons = []
     all_buttons.extend(menu_buttons)

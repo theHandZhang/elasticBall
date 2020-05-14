@@ -2,6 +2,8 @@ import sys
 import time
 
 import pygame
+
+from account import Account
 from functions import game_functions as gf
 from game_unit.text_box import InputBox
 
@@ -28,9 +30,10 @@ class Page:
 
 
 class LoginPage(Page):
-    def __init__(self, settings, screen, buttons, content, input_box):
+    def __init__(self, settings, screen, buttons, content, input_box, account):
         super().__init__(settings, screen, buttons, content)
         self.input_box = input_box
+        self.account = account
 
     def run(self):
         self.screen.fill(self.settings.screen_color)
@@ -40,7 +43,8 @@ class LoginPage(Page):
             pygame.draw.rect(self.screen, self.settings.screen_color, self.input_box.rect, 0)
             mouse_pos = pygame.mouse.get_pos()
             self.input_box.draw_self()
-            if gf.check_register_events(mouse_pos, self.buttons, self.input_box):
+            if gf.check_login_events(mouse_pos, self.buttons, self.input_box):
+                self.account = Account(self.settings, self.input_box.text)
                 print('Pushed')
                 return
             for button in self.buttons:
@@ -57,17 +61,18 @@ class ExitPage(Page):
 
 
 class GamePage(Page):
-    def __init__(self, settings, screen, buttons, content, balls, player_brick, bricks, vector):
+    def __init__(self, settings, screen, buttons, content, balls, player_brick, bricks, vector, account):
         super().__init__(settings, screen, buttons, content)
         self.balls = balls
         self.player_brick = player_brick
         self.bricks = bricks
         self.vector = vector
+        self.account = account
 
     def run(self):
 
         while True:
-            # time.sleep(0.01)
+
             self.screen.fill(self.settings.screen_color)
             pygame.draw.line(self.screen, (0, 0, 0), (self.screen.get_rect().width - 200, 0),
                              (self.screen.get_rect().width - 200, self.screen.get_rect().height), 1)
@@ -83,6 +88,7 @@ class GamePage(Page):
                 brick.draw_self()
                 brick.update()
                 if brick.isAlive is False:
+                    self.account.score += 1
                     self.bricks.remove(brick)
 
             for ball in self.balls:
@@ -92,11 +98,13 @@ class GamePage(Page):
                     print("a ball dead")
                     self.balls.remove(ball)
 
+            for button in self.buttons:
+                button.draw_self(mouse_pos)
+                pygame.display.flip()
+
             if gf.check_game_events(self.settings, self.screen, mouse_pos, self.buttons,
                                     self.balls, self.player_brick, self.vector):
                 print('Pushed')
                 return
-            for button in self.buttons:
-                button.draw_self(mouse_pos)
-                pygame.display.flip()
+
 
