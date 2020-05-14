@@ -72,7 +72,4 @@ def run_game():
                 all_page[button.msg].run()
 
 
-
-
-
 run_game()
