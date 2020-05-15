@@ -35,7 +35,7 @@ class InputBox:
 
 
 class TextBox:
-    def __init__(self, settings, screen, str_list, font_size, box_top, text_color):
+    def __init__(self, settings, screen, str_list, font_size, box_top, text_color, centerx):
         self.settings = settings
         self.screen = screen
 
@@ -46,7 +46,7 @@ class TextBox:
         for string in str_list:
             text_image = self.font.render(string, False, text_color, None)
             text_rect = text_image.get_rect()
-            text_rect.centerx = self.screen.get_rect().centerx
+            text_rect.centerx = centerx
             text_rect.centery = box_top + i * (text_rect.height + 10)
             self.image_list.append(text_image)
             self.rect_list.append(text_rect)

@@ -11,9 +11,9 @@ class Settings:
         self.button_selected_color = (0, 139, 0)
         self.button_text_color = (255, 255, 255)
 
-        self.ball_moving_speed = float(0.7)
-        self.ball_decrease_speed = float(0)
-        self.ball_num = 3
+        self.ball_moving_speed = float(0.9)
+        self.ball_decrease_speed = float(0.0001)
+        self.ball_num = 2
 
         self.brick_width = 80
         self.brick_height = 20
@@ -21,6 +21,7 @@ class Settings:
         self.brick_drop_speed = 0.01
         self.brick_increase_speed = 0.0
         self.brick_num = 8
+        self.brick_rows = 7
 
         self.player_brick_width = 200
         self.player_brick_height = 20

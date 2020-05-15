@@ -52,6 +52,7 @@ class Ball(Sprite):
         if (player_brick.rect.left - self.rect.width / 2 < self.x < player_brick.rect.right +
                 self.rect.width / 2) and abs(self.y - player_brick.rect.top + self.rect.height / 2) < 1:
             self.moving_angle = math.pi * 2 - self.moving_angle
+            self.speed = self.settings.ball_moving_speed
             print("player")
 
         for brick in bricks:
@@ -80,7 +81,8 @@ class Ball(Sprite):
                 brick.isAlive = False
                 print("OK Bottom")
 
-        self.speed -= self.decrease_speed
+        if self.speed >= 0:
+            self.speed -= self.decrease_speed
         self.rect.centerx = self.x
         self.rect.centery = self.y
 

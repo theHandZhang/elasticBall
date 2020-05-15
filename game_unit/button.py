@@ -65,6 +65,7 @@ class LoginButton(Button):
             return True
         else:
             pygame.draw.rect(self.screen, self.settings.screen_color, pygame.Rect(446, 386, 400, 28), 0)
-            TextBox(self.settings, self.screen, ['Account does not exist'], 40, 400, (255, 0, 0)).draw_self()
+            TextBox(self.settings, self.screen, ['Account does not exist'], 40, 400, (255, 0, 0),
+                    self.screen.get_rect().centerx).draw_self()
             return False
 

@@ -1,16 +1,29 @@
 from datetime import datetime
 
+import pygame
+
 
 class Account:
-    def __init__(self, settings, account_name):
+    def __init__(self, settings):
+        self.settings = settings
+        self.account_name = 'null'
+        self.score = 0
+        self.play_time = 0
+        self.current_time = None
+        self.font = pygame.font.SysFont(None, 30)
 
+    def draw_score(self, screen):
+        score_image = self.font.render('score : ' + str(self.score), False, (255, 0, 0), None)
+        score_image_rect = score_image.get_rect()
+        score_image_rect.top = 100
+        score_image_rect.left = 1040
+        pygame.draw.rect(screen, self.settings.screen_color, score_image_rect)
+        screen.blit(score_image, score_image_rect)
+
+    def set_name(self, account_name):
         if account_name == 'account':
             raise Exception("account name can not be 'account'!", account_name)
         self.account_name = account_name
-        self.score = 0
-        self.ball_num = settings.ball_num
-        self.play_time = 0
-        self.current_time = 0
 
     def time_start(self):
         self.current_time = datetime.now()

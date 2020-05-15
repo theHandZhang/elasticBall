@@ -44,7 +44,7 @@ class LoginPage(Page):
             mouse_pos = pygame.mouse.get_pos()
             self.input_box.draw_self()
             if gf.check_login_events(mouse_pos, self.buttons, self.input_box):
-                self.account = Account(self.settings, self.input_box.text)
+                self.account.set_name(self.input_box.text)
                 print('Pushed')
                 return
             for button in self.buttons:
@@ -61,22 +61,30 @@ class ExitPage(Page):
 
 
 class GamePage(Page):
-    def __init__(self, settings, screen, buttons, content, balls, player_brick, bricks, vector, account):
+    def __init__(self, settings, screen, buttons, content, balls, player_brick, bricks, vector, account, status):
         super().__init__(settings, screen, buttons, content)
         self.balls = balls
         self.player_brick = player_brick
         self.bricks = bricks
         self.vector = vector
         self.account = account
+        self.status = status
+        self.game_rect = pygame.Rect(0, 0, self.screen.get_rect().width - 200, self.screen.get_rect().height)
 
     def run(self):
         self.account.time_start()
-        while True:
+        pygame.draw.line(self.screen, (0, 0, 0), (self.screen.get_rect().width - 199, 0),
+                         (self.screen.get_rect().width - 200, self.screen.get_rect().height), 1)
 
-            self.screen.fill(self.settings.screen_color)
-            pygame.draw.line(self.screen, (0, 0, 0), (self.screen.get_rect().width - 200, 0),
-                             (self.screen.get_rect().width - 200, self.screen.get_rect().height), 1)
+        while True:
+            pygame.draw.rect(self.screen, self.settings.screen_color, self.game_rect)
+
             mouse_pos = pygame.mouse.get_pos()
+
+            self.content.draw_self()
+            self.account.draw_score(self.screen)
+
+            self.status.draw_ball_num()
 
             self.player_brick.draw_self()
             self.player_brick.update()
@@ -103,12 +111,10 @@ class GamePage(Page):
                 pygame.display.flip()
 
             if gf.check_game_events(self.settings, self.screen, mouse_pos, self.buttons,
-                                    self.balls, self.player_brick, self.vector):
+                                    self.balls, self.player_brick, self.vector, self.status):
                 self.account.time_end()
                 self.account.store_info()
                 self.bricks.empty()
                 self.balls.empty()
                 print('Pushed')
                 return
-
-

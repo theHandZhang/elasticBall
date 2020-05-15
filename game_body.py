@@ -7,6 +7,7 @@ from account import Account
 from game_page import Page, ExitPage, GamePage, LoginPage
 from game_settings.settings import Settings
 from functions import game_functions as gf, init_buttons as ib, init_bricks as ii, init_text_box as it
+from game_status import Status
 from game_unit.Vector import Vector
 from game_unit.brick import PlayBrick
 from game_unit.text_box import InputBox
@@ -20,7 +21,8 @@ def run_game():
     screen.fill(settings.screen_color)
     pygame.display.flip()
 
-    account = None
+    status = Status(settings, screen)
+    account = Account(settings)
 
     balls = Group()
     bricks = Group()
@@ -33,6 +35,7 @@ def run_game():
     input_box = InputBox(settings, screen)
     login_page_text = it.init_login_page_text_box(settings, screen)
     menu_page_text = it.init_menu_page_text_box(settings, screen)
+    game_page_text = it.init_game_page_text_box(settings, screen, account)
 
     menu_buttons = ib.init_menu_buttons(settings, screen)
     back_buttons = ib.init_back_buttons(settings, screen)
@@ -45,7 +48,8 @@ def run_game():
     author_page = Page(settings, screen, back_buttons, None)
     settings_page = Page(settings, screen, settings_buttons, None)
     exit_page = ExitPage(settings, screen, None, None)
-    game_page = GamePage(settings, screen, game_page_back_buttons, None, balls, player_brick, bricks, vector, account)
+    game_page = GamePage(settings, screen, game_page_back_buttons, game_page_text, balls,
+                         player_brick, bricks, vector, account, status)
     login_page = LoginPage(settings, screen, login_page_buttons, login_page_text, input_box, account)
 
     all_buttons = []
@@ -77,9 +81,3 @@ def run_game():
 
 
 run_game()
-'''
-acc = Account(Settings(), 'aa')
-acc.time_start()
-time.sleep(1)
-acc.time_end()
-'''

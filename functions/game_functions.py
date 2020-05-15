@@ -33,7 +33,7 @@ def check_login_events(mouse_pos, buttons, input_box):
                 input_box.text += input_box.key_characters[event.key]
 
 
-def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick, vector):
+def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick, vector, status):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -45,8 +45,11 @@ def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick,
                     return True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                ball_color_type = int(random.random() * 2 + 1)
-                balls.add(Ball(settings, screen, ball_color_type, vector.angle, player_brick))
+                if status.ball_num > 0:
+                    status.ball_num -= 1
+                    ball_color_type = int(random.random() * 2 + 1)
+                    balls.add(Ball(settings, screen, ball_color_type, vector.angle, player_brick))
+
             elif event.key == pygame.K_RIGHT:
                 player_brick.moving_right = True
             elif event.key == pygame.K_LEFT:
