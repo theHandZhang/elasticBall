@@ -2,6 +2,8 @@ import time
 
 import pygame
 from pygame.sprite import Group
+
+from account import Account
 from game_page import Page, ExitPage, GamePage, LoginPage
 from game_settings.settings import Settings
 from functions import game_functions as gf, init_buttons as ib, init_bricks as ii, init_text_box as it
@@ -75,3 +77,9 @@ def run_game():
 
 
 run_game()
+'''
+acc = Account(Settings(), 'aa')
+acc.time_start()
+time.sleep(1)
+acc.time_end()
+'''

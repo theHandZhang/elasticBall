@@ -70,7 +70,7 @@ class GamePage(Page):
         self.account = account
 
     def run(self):
-
+        self.account.time_start()
         while True:
 
             self.screen.fill(self.settings.screen_color)
@@ -104,6 +104,10 @@ class GamePage(Page):
 
             if gf.check_game_events(self.settings, self.screen, mouse_pos, self.buttons,
                                     self.balls, self.player_brick, self.vector):
+                self.account.time_end()
+                self.account.store_info()
+                self.bricks.empty()
+                self.balls.empty()
                 print('Pushed')
                 return
 
