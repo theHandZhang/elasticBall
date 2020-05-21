@@ -32,7 +32,7 @@ class Button:
             self.screen.fill(self.button_color, self.rect)
             self.screen.blit(self.msg_image, self.msg_image_rect)
 
-    def run_event(self):
+    def run_event(self, input_box):
         pass
 
 

@@ -14,6 +14,8 @@ from game_unit.text_box import InputBox
 
 
 def run_game():
+
+    # 窗口的初始化和加载设置
     pygame.init()
     pygame.display.set_caption("elasticBall")
     settings = Settings()
@@ -21,28 +23,35 @@ def run_game():
     screen.fill(settings.screen_color)
     pygame.display.flip()
 
+    # 游戏状态和账户
     status = Status(settings, screen)
     account = Account(settings)
 
+    # 球和砖块编组
     balls = Group()
     bricks = Group()
 
+    # 加载游戏的砖块和玩家的砖块
     ii.get_bricks(settings, bricks, screen)
     player_brick = PlayBrick(settings, screen)
 
+    # 显示小球发射方向的箭头
     vector = Vector(settings, screen, (0, 0))
 
+    # 加载所有的文本框和输入框
     input_box = InputBox(settings, screen)
     login_page_text = it.init_login_page_text_box(settings, screen)
     menu_page_text = it.init_menu_page_text_box(settings, screen)
     game_page_text = it.init_game_page_text_box(settings, screen, account)
 
+    # 加载所有的按钮
     menu_buttons = ib.init_menu_buttons(settings, screen)
     back_buttons = ib.init_back_buttons(settings, screen)
     settings_buttons = ib.init_settings_buttons(settings, screen)
     game_page_back_buttons = ib.init_game_page_back_buttons(settings, screen)
     login_page_buttons = ib.init_login_buttons(settings, screen)
 
+    # 加载所有的游戏页面
     menu_page = Page(settings, screen, menu_buttons, menu_page_text)
     ranking_page = Page(settings, screen, back_buttons, None)
     author_page = Page(settings, screen, back_buttons, None)

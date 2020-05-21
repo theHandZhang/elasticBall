@@ -3,9 +3,7 @@ import time
 
 import pygame
 
-from account import Account
 from functions import game_functions as gf
-from game_unit.text_box import InputBox
 
 
 class Page:

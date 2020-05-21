@@ -12,7 +12,7 @@ def check_button_events(mouse_pos, buttons):
             for button in buttons:
                 if button.rect.collidepoint(mouse_pos):
                     button.isPushed = True
-                    button.run_event()
+                    button.run_event(None)
                     return True
 
 
@@ -41,7 +41,7 @@ def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick,
             for button in buttons:
                 if button.rect.collidepoint(mouse_pos):
                     button.isPushed = True
-                    button.run_event()
+                    button.run_event(None)
                     return True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
