@@ -47,6 +47,7 @@ def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick,
             if event.key == pygame.K_SPACE:
                 if status.ball_num > 0:
                     status.ball_num -= 1
+                    # 生成一个随机数 用于产生不同的球的颜色
                     ball_color_type = int(random.random() * 2 + 1)
                     balls.add(Ball(settings, screen, ball_color_type, vector.angle, player_brick))
 

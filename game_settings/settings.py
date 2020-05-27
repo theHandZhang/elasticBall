@@ -13,7 +13,7 @@ class Settings:
 
         self.ball_moving_speed = float(0.9)
         self.ball_decrease_speed = float(0.0001)
-        self.ball_num = 2
+        self.ball_num = 3
 
         self.brick_width = 80
         self.brick_height = 20
