@@ -6,7 +6,7 @@ from pygame.sprite import Group
 from account import Account
 from game_page import Page, ExitPage, GamePage, LoginPage
 from game_settings.settings import Settings
-from functions import game_functions as gf, init_buttons as ib, init_bricks as ii, init_text_box as it
+from functions import game_functions as gf, init_buttons as ibu, init_bricks as ibr, init_text_box as it
 from game_status import Status
 from game_unit.Vector import Vector
 from game_unit.brick import PlayBrick
@@ -32,7 +32,7 @@ def run_game():
     bricks = Group()
 
     # 加载游戏的砖块和玩家的砖块
-    ii.get_bricks(settings, bricks, screen)
+    ibr.get_bricks(settings, bricks, screen)
     player_brick = PlayBrick(settings, screen)
 
     # 显示小球发射方向的箭头
@@ -45,11 +45,11 @@ def run_game():
     game_page_text = it.init_game_page_text_box(settings, screen, account)
 
     # 加载所有的按钮
-    menu_buttons = ib.init_menu_buttons(settings, screen)
-    back_buttons = ib.init_back_buttons(settings, screen)
-    settings_buttons = ib.init_settings_buttons(settings, screen)
-    game_page_back_buttons = ib.init_game_page_back_buttons(settings, screen)
-    login_page_buttons = ib.init_login_buttons(settings, screen)
+    menu_buttons = ibu.init_menu_buttons(settings, screen)
+    back_buttons = ibu.init_back_buttons(settings, screen)
+    settings_buttons = ibu.init_settings_buttons(settings, screen)
+    game_page_back_buttons = ibu.init_game_page_back_buttons(settings, screen)
+    login_page_buttons = ibu.init_login_buttons(settings, screen)
 
     # 加载所有的游戏页面
     menu_page = Page(settings, screen, menu_buttons, menu_page_text)
