@@ -8,6 +8,7 @@ from game_page import Page, ExitPage, GamePage, LoginPage
 from game_settings.settings import Settings
 from functions import game_functions as gf, init_buttons as ibu, init_bricks as ibr, init_text_box as it
 from game_status import Status
+from game_unit.PlayBack import PlayBack
 from game_unit.Vector import Vector
 from game_unit.brick import PlayBrick
 from game_unit.text_box import InputBox
@@ -15,13 +16,18 @@ from game_unit.text_box import InputBox
 
 def run_game():
 
-    # 窗口的初始化和加载设置
+    # 游戏的初始化和加载设置
     pygame.init()
+    pygame.mixer.init()
     pygame.display.set_caption("elasticBall")
     settings = Settings()
     screen = pygame.display.set_mode(settings.screen_size)
     screen.fill(settings.screen_color)
     pygame.display.flip()
+
+    # 载入音频类
+    play_back = PlayBack()
+    play_back.set_volume(0.5)
 
     # 游戏状态和账户
     status = Status(settings, screen)
@@ -45,11 +51,11 @@ def run_game():
     game_page_text = it.init_game_page_text_box(settings, screen, account)
 
     # 加载所有的按钮
-    menu_buttons = ibu.init_menu_buttons(settings, screen)
-    back_buttons = ibu.init_back_buttons(settings, screen)
-    settings_buttons = ibu.init_settings_buttons(settings, screen)
-    game_page_back_buttons = ibu.init_game_page_back_buttons(settings, screen)
-    login_page_buttons = ibu.init_login_buttons(settings, screen)
+    menu_buttons = ibu.init_menu_buttons(settings, screen, play_back)
+    back_buttons = ibu.init_back_buttons(settings, screen, play_back)
+    settings_buttons = ibu.init_settings_buttons(settings, screen, play_back)
+    game_page_back_buttons = ibu.init_game_page_back_buttons(settings, screen, play_back)
+    login_page_buttons = ibu.init_login_buttons(settings, screen, play_back)
 
     # 加载所有的游戏页面
     menu_page = Page(settings, screen, menu_buttons, menu_page_text)
@@ -58,7 +64,7 @@ def run_game():
     settings_page = Page(settings, screen, settings_buttons, None)
     exit_page = ExitPage(settings, screen, None, None)
     game_page = GamePage(settings, screen, game_page_back_buttons, game_page_text, balls,
-                         player_brick, bricks, vector, account, status)
+                         player_brick, bricks, vector, account, status, play_back)
     login_page = LoginPage(settings, screen, login_page_buttons, login_page_text, input_box, account)
 
     all_buttons = []

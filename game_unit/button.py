@@ -5,13 +5,15 @@ from game_unit.text_box import TextBox
 
 
 class Button:
-    def __init__(self, settings, screen, button_pos, msg):
+    def __init__(self, settings, screen, button_pos, msg, play_back):
         self.isPushed = False
+        self.mouse_on = False
 
         self.settings = settings
         self.screen = screen
         self.pos = button_pos
         self.msg = msg
+        self.play_back = play_back
 
         self.font = pygame.font.SysFont(None, 48)
         self.rect = pygame.Rect(button_pos[0], button_pos[1], settings.button_width, settings.button_height)
@@ -26,19 +28,26 @@ class Button:
 
     def draw_self(self, mouse_pos):
         if self.rect.collidepoint(mouse_pos):
+            if self.mouse_on is False:
+                self.play_back.play_on_button()
+            self.mouse_on = True
             self.screen.fill(self.button_selected_color, self.rect)
             self.screen.blit(self.msg_selected_image, self.msg_image_rect)
         else:
+            self.mouse_on = False
             self.screen.fill(self.button_color, self.rect)
             self.screen.blit(self.msg_image, self.msg_image_rect)
+
+    def play_pushed_sound(self):
+        self.play_back.play_push_button()
 
     def run_event(self, input_box):
         pass
 
 
 class RegisterButton(Button):
-    def __init__(self, settings, screen, button_pos, msg):
-        super().__init__(settings, screen, button_pos, msg)
+    def __init__(self, settings, screen, button_pos, msg, play_back):
+        super().__init__(settings, screen, button_pos, msg, play_back)
 
     def run_event(self, input_box):
         accounts = gf.read_account_file()
@@ -55,8 +64,8 @@ class RegisterButton(Button):
 
 
 class LoginButton(Button):
-    def __init__(self, settings, screen, button_pos, msg):
-        super().__init__(settings, screen, button_pos, msg)
+    def __init__(self, settings, screen, button_pos, msg, play_back):
+        super().__init__(settings, screen, button_pos, msg, play_back)
 
     def run_event(self, input_box):
         accounts = gf.read_account_file()

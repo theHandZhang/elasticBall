@@ -4,13 +4,14 @@ from pygame.sprite import Sprite
 
 
 class Ball(Sprite):
-    def __init__(self, settings, screen, color_type, moving_angle, player_brick):
+    def __init__(self, settings, screen, color_type, moving_angle, player_brick, play_back):
         Sprite.__init__(self)
         self.settings = settings
         self.screen = screen
         self.color_type = color_type
         self.moving_angle = moving_angle
         self.player_brick = player_brick
+        self.play_back = play_back
 
         self.rect = pygame.Rect(0, 0, 16, 16)
         self.screen_rect = screen.get_rect()
@@ -61,24 +62,28 @@ class Ball(Sprite):
                     brick.rect.top - self.rect.height / 2 < self.y < brick.rect.bottom + self.rect.height / 2):
                 self.moving_angle = math.pi - self.moving_angle
                 brick.isAlive = False
+                self.play_back.play_brick_break()
                 print("OK Left")
             # 砖块右边
             if abs(self.x - self.rect.width / 2 - brick.rect.right) < 1.0 and (
                     brick.rect.top - self.rect.height / 2 < self.y < brick.rect.bottom + self.rect.height / 2):
                 self.moving_angle = math.pi - self.moving_angle
                 brick.isAlive = False
+                self.play_back.play_brick_break()
                 print("OK Right")
             # 砖块上边
             if brick.rect.left - self.rect.width / 2 < self.x < brick.rect.right + self.rect.width / 2 and (
                     abs(self.y + self.rect.height / 2 - brick.rect.top) < 1.0):
                 self.moving_angle = math.pi * 2 - self.moving_angle
                 brick.isAlive = False
+                self.play_back.play_brick_break()
                 print("OK Top")
             # 砖块下边
             if brick.rect.left - self.rect.width / 2 < self.x < brick.rect.right + self.rect.width / 2 and (
                     abs(self.y - self.rect.height / 2 - brick.rect.bottom) < 1.0):
                 self.moving_angle = math.pi * 2 - self.moving_angle
                 brick.isAlive = False
+                self.play_back.play_brick_break()
                 print("OK Bottom")
 
         if self.speed >= 0:

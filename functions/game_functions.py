@@ -13,6 +13,7 @@ def check_button_events(mouse_pos, buttons):
                 if button.rect.collidepoint(mouse_pos):
                     button.isPushed = True
                     button.run_event(None)
+                    button.play_pushed_sound()
                     return True
 
 
@@ -24,6 +25,7 @@ def check_login_events(mouse_pos, buttons, input_box):
             for button in buttons:
                 if button.rect.collidepoint(mouse_pos):
                     button.isPushed = True
+                    button.play_pushed_sound()
                     if button.run_event(input_box):
                         return True
         elif event.type == pygame.KEYDOWN:
@@ -33,7 +35,7 @@ def check_login_events(mouse_pos, buttons, input_box):
                 input_box.text += input_box.key_characters[event.key]
 
 
-def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick, vector, status):
+def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick, vector, status, play_back):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -42,6 +44,7 @@ def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick,
                 if button.rect.collidepoint(mouse_pos):
                     button.isPushed = True
                     button.run_event(None)
+                    button.play_pushed_sound()
                     return True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -49,7 +52,7 @@ def check_game_events(settings, screen, mouse_pos, buttons, balls, player_brick,
                     status.ball_num -= 1
                     # 生成一个随机数 用于产生不同的球的颜色
                     ball_color_type = int(random.random() * 2 + 1)
-                    balls.add(Ball(settings, screen, ball_color_type, vector.angle, player_brick))
+                    balls.add(Ball(settings, screen, ball_color_type, vector.angle, player_brick, play_back))
 
             elif event.key == pygame.K_RIGHT:
                 player_brick.moving_right = True

@@ -68,7 +68,8 @@ class ExitPage(Page):
 
 
 class GamePage(Page):
-    def __init__(self, settings, screen, buttons, content, balls, player_brick, bricks, vector, account, status):
+    def __init__(self, settings, screen, buttons, content, balls, player_brick,
+                 bricks, vector, account, status, play_back):
         super().__init__(settings, screen, buttons, content)
         # 游戏的各种组件
         self.balls = balls
@@ -77,6 +78,7 @@ class GamePage(Page):
         self.vector = vector
         self.account = account
         self.status = status
+        self.play_back = play_back
         # 游戏游玩界面的大小 方便刷新游玩界面
         self.game_rect = pygame.Rect(0, 0, self.screen.get_rect().width - 200, self.screen.get_rect().height)
 
@@ -125,7 +127,7 @@ class GamePage(Page):
                 pygame.display.flip()
 
             if gf.check_game_events(self.settings, self.screen, mouse_pos, self.buttons,
-                                    self.balls, self.player_brick, self.vector, self.status):
+                                    self.balls, self.player_brick, self.vector, self.status, self.play_back):
                 # 一个游戏回合的结束 储存账户信息，并清空所有的砖块和球
                 self.account.time_end()
                 self.account.store_info()
