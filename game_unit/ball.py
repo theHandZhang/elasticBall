@@ -36,17 +36,20 @@ class Ball(Sprite):
         if abs(self.x + self.rect.width / 2 - self.screen_rect.width + 200) < 1.0 and (
                 0 < self.y < self.screen_rect.height):
             self.moving_angle = math.pi - self.moving_angle
+            self.play_back.play_ball_collision()
             print("yesR")
 
         # 碰到屏幕左边
         if abs(self.x - self.rect.width / 2) < 1.0 and (
                 0 < self.y < self.screen_rect.height):
             self.moving_angle = math.pi - self.moving_angle
+            self.play_back.play_ball_collision()
             print("yesL")
 
         # 碰到屏幕上边
         if abs(self.y - self.rect.height / 2) < 1.0 and (0 < self.x < self.screen_rect.width - 200):
             self.moving_angle = math.pi * 2 - self.moving_angle
+            self.play_back.play_ball_collision()
             print("yesT")
 
         # 碰到玩家的砖块
@@ -54,6 +57,7 @@ class Ball(Sprite):
                 self.rect.width / 2) and abs(self.y - player_brick.rect.top + self.rect.height / 2) < 1:
             self.moving_angle = math.pi * 2 - self.moving_angle
             self.speed = self.settings.ball_moving_speed
+            self.play_back.play_ball_collision()
             print("player")
 
         for brick in bricks:

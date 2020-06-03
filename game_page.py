@@ -89,6 +89,7 @@ class GamePage(Page):
                          (self.screen.get_rect().width - 200, self.screen.get_rect().height), 1)
 
         while True:
+            time.sleep(0.001)
             # 刷新游玩界面
             pygame.draw.rect(self.screen, self.settings.screen_color, self.game_rect)
 
