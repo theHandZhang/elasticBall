@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from pygame.sprite import Sprite
 
@@ -11,8 +13,9 @@ class Brick(Sprite):
 
         self.speed = settings.brick_drop_speed
 
-        self.rect = pygame.Rect(brick_pos[0], brick_pos[1], settings.brick_width, settings.brick_height)
-        self.brick_color = settings.brick_color
+        self.image1 = pygame.image.load('texture/brick1.png')
+        self.image2 = pygame.image.load('texture/brick2.png')
+        self.rect = self.image1.get_rect()
 
         self.rect.centerx = brick_pos[0]
         self.rect.centery = brick_pos[1]
@@ -21,13 +24,18 @@ class Brick(Sprite):
 
         self.y = float(self.rect.centery)
 
+        self.brick_type = int(random.random() * 2 + 1)
+
     def update(self):
         self.speed += self.settings.brick_increase_speed
         self.y += self.speed
         self.rect.centery = self.y
 
     def draw_self(self):
-        self.screen.fill(self.brick_color, self.rect)
+        if self.brick_type == 1:
+            self.screen.blit(self.image1, self.rect)
+        elif self.brick_type == 2:
+            self.screen.blit(self.image2, self.rect)
 
 
 class PlayBrick(Sprite):
