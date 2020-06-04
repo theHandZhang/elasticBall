@@ -5,7 +5,7 @@ from game_unit.text_box import TextBox
 
 
 class Button:
-    def __init__(self, settings, screen, button_pos, msg, play_back):
+    def __init__(self, settings, screen, button_pos, msg, play_back):  # buttons_pos 分别是对应的left 和top
         self.isPushed = False
         self.mouse_on = False
 
@@ -15,14 +15,14 @@ class Button:
         self.msg = msg
         self.play_back = play_back
 
-        self.font = pygame.font.SysFont(None, 48)
-        self.rect = pygame.Rect(button_pos[0], button_pos[1], settings.button_width, settings.button_height)
-        self.button_color = settings.button_color
-        self.button_selected_color = settings.button_selected_color
+        self.font = pygame.font.SysFont(None, 36)
+        self.image = pygame.image.load('texture/button.png')
+        self.rect = self.image.get_rect()
+        self.rect.left = button_pos[0]
+        self.rect.top = button_pos[1]
 
-        self.text_color = settings.button_text_color
-        self.msg_image = self.font.render(msg, True, self.text_color, self.button_color)
-        self.msg_selected_image = self.font.render(msg, True, self.text_color, self.button_selected_color)
+        self.msg_image = self.font.render(msg, True, self.settings.button_text_color)
+        self.msg_selected_image = self.font.render(msg, True, self.settings.button_text_selected_color)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
@@ -31,11 +31,11 @@ class Button:
             if self.mouse_on is False:
                 self.play_back.play_on_button()
             self.mouse_on = True
-            self.screen.fill(self.button_selected_color, self.rect)
+            self.screen.blit(self.image, self.rect)
             self.screen.blit(self.msg_selected_image, self.msg_image_rect)
         else:
             self.mouse_on = False
-            self.screen.fill(self.button_color, self.rect)
+            self.screen.blit(self.image, self.rect)
             self.screen.blit(self.msg_image, self.msg_image_rect)
 
     def play_pushed_sound(self):

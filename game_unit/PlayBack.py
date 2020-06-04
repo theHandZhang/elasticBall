@@ -16,6 +16,7 @@ class PlayBack:
     def set_volume(self, volume):
         self.brick_channel.set_volume(volume)
         self.button_channel.set_volume(volume)
+        self.ball_channel.set_volume(volume)
 
     def play_brick_break(self):
         self.brick_channel.play(self.brick_break_sound)

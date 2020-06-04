@@ -7,9 +7,8 @@ class Settings:
 
         self.button_width = 150
         self.button_height = 40
-        self.button_color = (0, 255, 0)
-        self.button_selected_color = (0, 139, 0)
-        self.button_text_color = (255, 255, 255)
+        self.button_text_selected_color = (255, 215, 0)
+        self.button_text_color = (0, 0, 0)
 
         self.ball_moving_speed = float(2)
         self.ball_decrease_speed = float(0.0001)

@@ -19,6 +19,7 @@ def run_game():
     # 游戏的初始化和加载设置
     pygame.init()
     pygame.mixer.init()
+    pygame.font.init()
     pygame.display.set_caption("elasticBall")
     settings = Settings()
     screen = pygame.display.set_mode(settings.screen_size)
@@ -27,7 +28,7 @@ def run_game():
 
     # 载入音频类
     play_back = PlayBack()
-    play_back.set_volume(0.5)
+    play_back.set_volume(0.3)
 
     # 游戏状态和账户
     status = Status(settings, screen)
