@@ -1,6 +1,4 @@
 *.py[cod]
 __pycache__
-game_settings/__pycache__/settings.cpython-36.pyc
-game_unit/__pycache__/ball.cpython-36.pyc
 venv
 .idea
