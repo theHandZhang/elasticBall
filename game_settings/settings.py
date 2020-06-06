@@ -24,7 +24,7 @@ class Settings:
 
         self.player_brick_width = 200
         self.player_brick_height = 20
-        self.player_brick_color = (147, 112, 219)
+        # self.player_brick_color = (147, 112, 219) 弃用
         self.player_brick_speed = 4
 
         self.input_box_text_color = (0, 0, 0)
@@ -32,3 +32,4 @@ class Settings:
 
         self.vector_size = 50
         self.vector_wing_size = 10
+        self.vector_spinning_speed = 0.04

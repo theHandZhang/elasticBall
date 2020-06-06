@@ -46,8 +46,8 @@ class PlayBrick(Sprite):
 
         self.screen_rect = screen.get_rect()
 
-        self.rect = pygame.Rect(0, 0, settings.player_brick_width, settings.player_brick_height)
-        self.brick_color = settings.player_brick_color
+        self.image = pygame.image.load('texture/player_brick.png')
+        self.rect = self.image.get_rect()
 
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
@@ -66,4 +66,4 @@ class PlayBrick(Sprite):
         self.rect.centerx = self.centerX
 
     def draw_self(self):
-        pygame.draw.rect(self.screen, self.brick_color, self.rect)
+        self.screen.blit(self.image, self.rect)

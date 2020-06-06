@@ -19,9 +19,9 @@ class Vector:
     def update(self, player_brick):
         self.pos = (player_brick.rect.centerx, player_brick.rect.top)
         if self.moving_left and self.angle < math.pi:
-            self.angle += 0.005
+            self.angle += self.settings.vector_spinning_speed
         if self.moving_right and self.angle > 0:
-            self.angle -= 0.005
+            self.angle -= self.settings.vector_spinning_speed
 
     def draw_self(self):
         self.end_pos = (float(self.pos[0] + self.size * math.cos(self.angle)),
