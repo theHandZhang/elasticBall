@@ -36,9 +36,13 @@ class LoginPage(Page):
         super().__init__(settings, screen, buttons, content)
         self.input_box = input_box
         self.account = account
+        self.image = pygame.image.load('texture/login_page.png')
+        self.image_rect = self.image.get_rect()
+        self.image_rect.center = self.screen.get_rect().center
 
     def run(self):
         self.screen.fill(self.settings.screen_color)
+        self.screen.blit(self.image, self.image_rect)
         while True:
             time.sleep(0.01)
             self.content.draw_self()
