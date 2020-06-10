@@ -50,6 +50,7 @@ def run_game():
     login_page_text = it.init_login_page_text_box(settings, screen)
     menu_page_text = it.init_menu_page_text_box(settings, screen)
     game_page_text = it.init_game_page_text_box(settings, screen, account)
+    ranking_page_text = it.init_ranking_page_text_box(settings, screen)
 
     # 加载所有的按钮
     menu_buttons = ibu.init_menu_buttons(settings, screen, play_back)
@@ -60,7 +61,7 @@ def run_game():
 
     # 加载所有的游戏页面
     menu_page = Page(settings, screen, menu_buttons, menu_page_text)
-    ranking_page = Page(settings, screen, back_buttons, None)
+    ranking_page = Page(settings, screen, back_buttons, ranking_page_text)
     author_page = Page(settings, screen, back_buttons, None)
     settings_page = Page(settings, screen, settings_buttons, None)
     exit_page = ExitPage(settings, screen, None, None)
@@ -96,4 +97,5 @@ def run_game():
                 all_page[button.msg].run()
 
 
-run_game()
+if __name__ == '__main__':
+    run_game()

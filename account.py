@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pygame
+import socket
 
 
 class Account:
@@ -38,3 +39,12 @@ class Account:
         file = open(file_path, 'a')
         file.write(str(self.play_time) + '##' + str(self.score) + '\n')
         file.close()
+        self.store_info_remote()
+
+    def store_info_remote(self):
+        msg = 'SAVE@' + self.account_name + '#' + str(self.play_time) + '#' + str(self.score)
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect(("cn-zj-bgp-2.sakurafrp.com", 23413))
+        client.send(msg.encode())
+        print("send info OK")
+        client.close()

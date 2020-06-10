@@ -1,3 +1,5 @@
+import socket
+
 from game_unit.text_box import TextBox
 
 
@@ -21,3 +23,17 @@ def init_game_page_text_box(settings, screen, account):
                                           'brick'],
                        25, 800, (0, 0, 0), 1100)
     return text_box
+
+
+def init_ranking_page_text_box(settings, screen):
+    msg = 'RANK@'
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect(("cn-zj-bgp-2.sakurafrp.com", 23413))
+    client.send(msg.encode())
+    data_info = client.recv(1024).decode().replace('#', '     ')
+    datas = data_info.split('@')
+
+    text_box = TextBox(settings, screen, datas, 30, 100, (0, 0, 0), screen.get_rect().centerx)
+    client.close()
+    return text_box
+

@@ -136,6 +136,7 @@ class GamePage(Page):
                 # 一个游戏回合的结束 储存账户信息，并清空所有的砖块和球
                 self.account.time_end()
                 self.account.store_info()
+
                 self.bricks.empty()
                 self.balls.empty()
                 print('Pushed')

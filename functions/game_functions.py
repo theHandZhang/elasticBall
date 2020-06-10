@@ -2,6 +2,7 @@ import random
 import sys
 import pygame
 from game_unit.ball import Ball
+import socket
 
 
 def check_button_events(mouse_pos, buttons):
@@ -84,3 +85,11 @@ def read_account_file():
     accounts = account_file.readlines()
     account_file.close()
     return accounts
+
+'''
+def get_ranking_info():
+    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    host = 'cn-cd-dx.sakurafrp.com'
+    port = 12348
+    client.sendto(b'RANK@', (host, port))
+'''
