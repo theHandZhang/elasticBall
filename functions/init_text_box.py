@@ -26,14 +26,18 @@ def init_game_page_text_box(settings, screen, account):
 
 
 def init_ranking_page_text_box(settings, screen):
-    msg = 'RANK@'
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect(("cn-zj-bgp-2.sakurafrp.com", 23413))
-    client.send(msg.encode())
-    data_info = client.recv(1024).decode().replace('#', '     ')
-    datas = data_info.split('@')
-
-    text_box = TextBox(settings, screen, datas, 30, 100, (0, 0, 0), screen.get_rect().centerx)
-    client.close()
+    text_box = TextBox(settings, screen, [' Information cannot be obtained from the network'],
+                       50, 300, (255, 0, 0), screen.get_rect().centerx)
     return text_box
 
+
+def init_settings_page_text_box(settings, screen):
+    text_box = TextBox(settings, screen, ['Undeveloped'],
+                       60, 300, (255, 0, 0), screen.get_rect().centerx)
+    return text_box
+
+
+def init_author_page_text_box(settings, screen):
+    text_box = TextBox(settings, screen, ['A STUDENT'],
+                       60, 300, (0, 0, 0), screen.get_rect().centerx)
+    return text_box

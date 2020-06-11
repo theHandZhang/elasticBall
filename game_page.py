@@ -3,19 +3,28 @@ import time
 
 import pygame
 
-from functions import game_functions as gf
+from functions import game_functions as gf, init_bricks as ibr
 
 
 # 游戏的一般页面
+from game_unit.brick import PlayBrick
+
+
 class Page:
     def __init__(self, settings, screen, buttons, content):
         self.settings = settings
         self.screen = screen
         self.buttons = buttons
         self.content = content
+        self.background_image = pygame.image.load('texture/background.png')
+        self.background_rect = self.background_image.get_rect()
+        self.background_rect.center = self.screen.get_rect().center
+
+    def draw_background_image(self):
+        self.screen.blit(self.background_image, self.background_rect)
 
     def run(self):
-        self.screen.fill(self.settings.screen_color)
+        self.draw_background_image()
         while True:
             time.sleep(0.01)
             self.content.draw_self()
@@ -41,7 +50,7 @@ class LoginPage(Page):
         self.image_rect.center = self.screen.get_rect().center
 
     def run(self):
-        self.screen.fill(self.settings.screen_color)
+        self.draw_background_image()
         self.screen.blit(self.image, self.image_rect)
         while True:
             time.sleep(0.01)
@@ -72,12 +81,12 @@ class ExitPage(Page):
 
 
 class GamePage(Page):
-    def __init__(self, settings, screen, buttons, content, balls, player_brick,
+    def __init__(self, settings, screen, buttons, content, balls,
                  bricks, vector, account, status, play_back):
         super().__init__(settings, screen, buttons, content)
         # 游戏的各种组件
         self.balls = balls
-        self.player_brick = player_brick
+        self.player_brick = None
         self.bricks = bricks
         self.vector = vector
         self.account = account
@@ -85,17 +94,23 @@ class GamePage(Page):
         self.play_back = play_back
         # 游戏游玩界面的大小 方便刷新游玩界面
         self.game_rect = pygame.Rect(0, 0, self.screen.get_rect().width - 200, self.screen.get_rect().height)
+        self.game_background_image = pygame.image.load('texture/game_page_background.png')
 
     def run(self):
+        # 加载玩家的砖块
+        self.player_brick = PlayBrick(self.settings, self.screen)
+        # 加载游戏砖块
+        ibr.get_bricks(self.settings, self.bricks, self.screen)
         self.account.time_start()
         # 绘制一条分割线，将游戏的实时信息与游玩界面分割开来
         pygame.draw.line(self.screen, (0, 0, 0), (self.screen.get_rect().width - 199, 0),
-                         (self.screen.get_rect().width - 200, self.screen.get_rect().height), 1)
+                         (self.screen.get_rect().width - 199, self.screen.get_rect().height), 1)
+        self.status.ball_num = 3
 
         while True:
             time.sleep(0.001)
             # 刷新游玩界面
-            pygame.draw.rect(self.screen, self.settings.screen_color, self.game_rect)
+            self.screen.blit(self.game_background_image, self.game_rect)
 
             mouse_pos = pygame.mouse.get_pos()
             # 绘制游戏必要的文字信息
@@ -136,7 +151,7 @@ class GamePage(Page):
                 # 一个游戏回合的结束 储存账户信息，并清空所有的砖块和球
                 self.account.time_end()
                 self.account.store_info()
-
+                self.account.score = 0
                 self.bricks.empty()
                 self.balls.empty()
                 print('Pushed')

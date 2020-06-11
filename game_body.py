@@ -4,6 +4,7 @@ import pygame
 from pygame.sprite import Group
 
 from account import Account
+from functions.game_functions import get_ranking_info
 from game_page import Page, ExitPage, GamePage, LoginPage
 from game_settings.settings import Settings
 from functions import game_functions as gf, init_buttons as ibu, init_bricks as ibr, init_text_box as it
@@ -15,7 +16,6 @@ from game_unit.text_box import InputBox
 
 
 def run_game():
-
     # 游戏的初始化和加载设置
     pygame.init()
     pygame.mixer.init()
@@ -38,10 +38,6 @@ def run_game():
     balls = Group()
     bricks = Group()
 
-    # 加载游戏的砖块和玩家的砖块
-    ibr.get_bricks(settings, bricks, screen)
-    player_brick = PlayBrick(settings, screen)
-
     # 显示小球发射方向的箭头
     vector = Vector(settings, screen, (0, 0))
 
@@ -51,6 +47,8 @@ def run_game():
     menu_page_text = it.init_menu_page_text_box(settings, screen)
     game_page_text = it.init_game_page_text_box(settings, screen, account)
     ranking_page_text = it.init_ranking_page_text_box(settings, screen)
+    settings_page_text = it.init_settings_page_text_box(settings, screen)
+    author_page_text = it.init_author_page_text_box(settings, screen)
 
     # 加载所有的按钮
     menu_buttons = ibu.init_menu_buttons(settings, screen, play_back)
@@ -62,11 +60,11 @@ def run_game():
     # 加载所有的游戏页面
     menu_page = Page(settings, screen, menu_buttons, menu_page_text)
     ranking_page = Page(settings, screen, back_buttons, ranking_page_text)
-    author_page = Page(settings, screen, back_buttons, None)
-    settings_page = Page(settings, screen, settings_buttons, None)
+    author_page = Page(settings, screen, back_buttons, author_page_text)
+    settings_page = Page(settings, screen, settings_buttons, settings_page_text)
     exit_page = ExitPage(settings, screen, None, None)
     game_page = GamePage(settings, screen, game_page_back_buttons, game_page_text, balls,
-                         player_brick, bricks, vector, account, status, play_back)
+                         bricks, vector, account, status, play_back)
     login_page = LoginPage(settings, screen, login_page_buttons, login_page_text, input_box, account)
 
     all_buttons = []
@@ -94,7 +92,13 @@ def run_game():
         for button in all_buttons:
             if button.isPushed:
                 button.isPushed = False
-                all_page[button.msg].run()
+                if button.msg == 'Ranking':
+                    all_page[button.msg].content = get_ranking_info(settings, screen)
+                    all_page[button.msg].run()
+                elif button.msg == 'Save':
+                    all_page['Back'].run()
+                else:
+                    all_page[button.msg].run()
 
 
 if __name__ == '__main__':

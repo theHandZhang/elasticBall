@@ -47,4 +47,7 @@ class Account:
         client.connect(("cn-zj-bgp-2.sakurafrp.com", 23413))
         client.send(msg.encode())
         print("send info OK")
+
         client.close()
+        print("socket close")
+

@@ -11,7 +11,7 @@ class Settings:
         self.button_text_color = (0, 0, 0)
 
         self.ball_moving_speed = float(2)
-        self.ball_decrease_speed = float(0.0001)
+        self.ball_decrease_speed = float(0.0008)
         self.ball_num = 3
 
         self.brick_width = 80
@@ -32,4 +32,4 @@ class Settings:
 
         self.vector_size = 50
         self.vector_wing_size = 10
-        self.vector_spinning_speed = 0.04
+        self.vector_spinning_speed = 0.02

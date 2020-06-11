@@ -1,8 +1,11 @@
 import random
 import sys
+
 import pygame
 from game_unit.ball import Ball
 import socket
+
+from game_unit.text_box import TextBox
 
 
 def check_button_events(mouse_pos, buttons):
@@ -86,10 +89,21 @@ def read_account_file():
     account_file.close()
     return accounts
 
-'''
-def get_ranking_info():
-    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    host = 'cn-cd-dx.sakurafrp.com'
-    port = 12348
-    client.sendto(b'RANK@', (host, port))
-'''
+
+def get_ranking_info(settings, screen):
+    msg = 'RANK@'
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    client.connect(("cn-zj-bgp-2.sakurafrp.com", 23413))
+
+    client.send(msg.encode())
+    data_info = client.recv(1024).decode().replace('#', '       ')
+    datas = data_info.split('@')
+    text = ['name               time             score']
+    text.extend(datas)
+    text_box = TextBox(settings, screen, text, 30, 100, (127, 255, 212), screen.get_rect().centerx)
+    client.close()
+    print("socket close")
+
+    return text_box
+
