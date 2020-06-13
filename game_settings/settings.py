@@ -18,7 +18,7 @@ class Settings:
         self.brick_height = 20
         self.brick_color = (205, 133, 63)
         self.brick_drop_speed = 0.01
-        self.brick_increase_speed = 0.0
+        self.brick_increase_speed = 0.00001
         self.brick_num = 8
         self.brick_rows = 7
 

@@ -31,7 +31,7 @@ class Page:
             mouse_pos = pygame.mouse.get_pos()
             # 用来处理按钮按下的信息 当按钮按下则退出页面
             if gf.check_button_events(mouse_pos, self.buttons):
-                print('Pushed')
+
                 return
             # 鼠标移动到按钮上会改变按钮的颜色
             for button in self.buttons:
@@ -62,7 +62,7 @@ class LoginPage(Page):
             # 检查登陆的相关事件
             if gf.check_login_events(mouse_pos, self.buttons, self.input_box):
                 self.account.set_name(self.input_box.text)
-                print('Pushed')
+
                 return
             # 鼠标移动到按钮上会改变按钮的颜色
             for button in self.buttons:
@@ -154,5 +154,5 @@ class GamePage(Page):
                 self.account.score = 0
                 self.bricks.empty()
                 self.balls.empty()
-                print('Pushed')
+
                 return

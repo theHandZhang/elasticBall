@@ -54,7 +54,8 @@ class RegisterButton(Button):
         account_name = input_box.text + '\n'
         if account_name in accounts:
             pygame.draw.rect(self.screen, self.settings.screen_color, pygame.Rect(446, 386, 400, 28), 0)
-            TextBox(self.settings, self.screen, ['Account already exist'], 40, 400, (255, 0, 0)).draw_self()
+            TextBox(self.settings, self.screen, ['Account already exist'], 40, 400, (255, 0, 0),
+                    self.screen.get_rect().centerx).draw_self()
             self.isPushed = False
             return False
         else:
